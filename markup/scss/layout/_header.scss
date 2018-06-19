@@ -1,0 +1,288 @@
+#header {
+	position: relative;
+	background-image: url(../images/bg-header.png);
+	background-repeat: repeat;
+	padding: 15px;
+
+	@include media (">=desktop") {
+		padding: 36px 15px;
+	}
+
+	@include media (">=1600px") {
+		padding: 36px 44px;
+	}
+
+	.flex-container {
+		@include media (">=tablet") {
+			align-items: center;
+			justify-content: space-between;
+		}
+	}
+}
+
+
+.logo {
+	width: 200px;
+	display: inline-block;
+	vertical-align: middle;
+
+	@include media ('>=widescreen') {
+		width: 250px;
+	}
+
+	@include media ('>=1600px') {
+		width: 372px;
+	}
+
+	a {
+		text-decoration: none;
+	}
+}
+
+.menu {
+	padding-top: 6px;
+	width: calc(100% - 200px);
+	text-align: right;
+	font-family: $base-font-sans-serif;
+
+	@include media ('>=widescreen') {
+		width: calc(100% - 250px);
+	}
+
+	@include media (">=1600px") {
+		width: calc(100% - 372px);
+	}
+
+	ul {
+		@extend %listreset;
+	}
+}
+
+#nav {
+	@include media ("<desktop") {
+		@include animate(top opacity visibility);
+
+		opacity: 0;
+		visibility: hidden;
+		position: absolute;
+		width: 100%;
+		top: 0;
+		left: 0;
+		z-index: 20;
+		background-image: url(../images/bg-header.png);
+		background-repeat: repeat;
+
+		.menu-active & {
+			opacity: 1;
+			top: 100%;
+			visibility: visible;
+		}
+	}
+
+	@include media (">=desktop") {
+		margin: 0 -10px;
+	}
+
+	@include media (">=1500px") {
+		margin: 0 -24px;
+	}
+
+	>li {
+		@include animate(border-bottom);
+
+		font-size: 15px;
+		font-weight: 500;
+		line-height: 1.875;
+		color: $black;
+		text-align: center;
+		text-transform: uppercase;
+		position: relative;
+
+		@include media (">=desktop") {
+			display: inline-block;
+			vertical-align: middle;
+			padding: 0 10px;
+			margin-right: -4px;
+		}
+
+		@include media('>=1500px') {
+			padding: 0 25px;
+			font-size: 16px;
+			font-weight: 600;
+		}
+		
+		&:not(:last-child).active {
+			>a {
+				border-bottom: 4px solid $red;
+			}
+		}
+
+		&:hover {
+			.menu-drop {
+				display: block;
+			}
+		}
+
+		>a {
+			@include animate(border-bottom);
+
+			text-decoration: none;
+			border-bottom: 4px solid transparent;
+			display: block;
+			padding: 5px 10px;
+
+			@include media ('>=desktop') {
+				padding: 10px 0;
+			}
+
+			@include media (">=1500px") {
+				padding: 24px 0;
+			}
+
+			&:not(.contact):hover {
+				border-bottom: 4px solid $red;
+			}
+		}
+
+		.contact {
+			@include animate(border-color);
+
+			font-weight: 600;
+			color: #ee393e;
+			
+			@include media (">=desktop") {
+				padding: 10px 5px;
+				border: 1px solid $light-gray;
+			}
+
+			@include media('>=1500px') {
+				padding: 23px 25px;
+			}
+
+			&:hover {
+				border-color: $red;
+			}
+		}
+	}
+}
+
+.menu-drop {
+	display: none;
+	position: relative;
+	background-color: $white;
+
+	@include media (">=desktop") {
+		position: absolute;
+		top: 68px;
+		left: 0;
+		min-width: 200px;
+	}
+
+	@include media ('>=1500px') {
+		top: 88px;
+	}
+
+	&:before {
+		content:'';
+		position: absolute;
+		height: 50px;
+		left: 0;
+		right: 0;
+		bottom: 100%;
+		background-color: transparent;
+	}
+
+	li {
+		display: block;
+		margin: 0;
+		padding: 5px 20px;
+
+		@include media (">=desktop") {
+			text-align: left;
+			position: relative;
+		}
+
+		&:hover {
+			.subdrop {
+				display: block;
+			}
+
+			>a {
+				border-bottom: 4px solid $red
+			}
+		}
+
+		a {
+			border-bottom: 4px solid transparent;
+			display: block;
+			text-decoration: none;
+		}
+	}
+}
+
+.subdrop {
+	display: none;
+	position: relative;
+	background-color: $white;
+
+	@include media (">=desktop") {
+		position: absolute;
+		width: 100%;
+		left: 100%;
+		top: 0;
+		border-left: 10px solid transparent;
+	}
+}
+
+.nav-opener {
+	display: block;
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	top: 50%;
+	right: 15px;
+	transform: translateY(-50%);
+
+	@include media(">=desktop") {
+		display: none;
+	}
+
+	.menu-active & {
+		span {
+			opacity: 0;
+		}
+
+		&:before,
+		&:after {
+			transform: translateX(-50%) rotate(45deg);
+			top:50%;
+		}
+
+		&:after {
+			transform: translateX(-50%) rotate(-45deg);
+		}
+	}
+
+	&:after,
+	&:before,
+	span {
+		@include animate(top transform opacity);
+
+		content:"";
+		position: absolute;
+		width: 25px;
+		height: 3px;
+		background: $base-text-color;
+		left: 50%;
+		transform: translateX(-50%);
+		top: 50%;
+	}
+
+	&:before {
+		top: 30%;
+	}
+
+	&:after {
+		top: 70%;
+	}
+}
